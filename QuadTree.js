@@ -1,3 +1,5 @@
+let count = 0;
+
 class QuadTree {
   constructor(boundary, capacity) {
     this.boundary = boundary;
@@ -43,6 +45,35 @@ class QuadTree {
       }
     }
   }
+
+  getCount() {
+    return count;
+  }
+
+  query(range, found) {
+    if (!found) {
+      found = [];
+    }
+    if (!this.boundary.intersects(range)) {
+      return;
+    } else {
+      count++;
+      // console.log("what is count ? ", count);
+      for (let p of this.points) {
+        if (range.contains(p)) {
+          found.push(p);
+        }
+      }
+      if (this.divided) {
+        this.nw.query(range, found);
+        this.ne.query(range, found);
+        this.sw.query(range, found);
+        this.se.query(range, found);
+      }
+      return found;
+    }
+  }
+
   show() {
     stroke(255);
     strokeWeight(1);

@@ -6,6 +6,15 @@ class Rectangle {
     this.h = h;
   }
 
+  intersects(range) {
+    return !(
+      range.x - range.w > this.x + this.w ||
+      range.x + range.w < this.x - this.w ||
+      range.y - range.h > this.y + this.h ||
+      range.y + range.h < this.y - this.h
+    );
+  }
+
   contains({ x, y }) {
     return (
       x >= this.x - this.w &&
